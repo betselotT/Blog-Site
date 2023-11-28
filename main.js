@@ -8,7 +8,6 @@ function fetchData() {
             return response.json();
         })
         .then(data => {
-            displayBlogData(data); // Call a separate function to display the fetched data
         })
         .catch(error => {
             console.error('There was a problem fetching the data:', error);
@@ -18,10 +17,8 @@ function fetchData() {
 function displayBlogData(data) {
     const blogList = document.getElementById('blogList');
 
-    // Clear any previous content in the blogList div
     blogList.innerHTML = '';
 
-    // Iterate through the blog entries and create list items to display them
     data.forEach(blog => {
         const listItem = document.createElement('li');
         listItem.innerHTML = `<strong>User ID:</strong> ${blog.id}<br>
@@ -31,5 +28,4 @@ function displayBlogData(data) {
     });
 }
 
-// Call the fetchData function when the page loads
 document.addEventListener('DOMContentLoaded', fetchData);

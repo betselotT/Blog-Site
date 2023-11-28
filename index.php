@@ -1,33 +1,25 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    // Validate and sanitize input data (for example, you might use more robust validation)
     $id = isset($_POST['id']) ? $_POST['id'] : '';
     $name = isset($_POST['name']) ? $_POST['name'] : '';
     $blog = isset($_POST['blog']) ? $_POST['blog'] : '';
 
-    // Create an associative array with the form data
     $newBlogEntry = [
         'id' => $id,
         'name' => $name,
         'blog' => $blog,
     ];
 
-    // Read existing data from the JSON file, if it exists
     $jsonData = file_exists('blogs.json') ? file_get_contents('blogs.json') : '[]';
 
-    // Decode JSON data to a PHP array
     $blogs = json_decode($jsonData, true);
 
-    // Add the new blog entry to the array
     $blogs[] = $newBlogEntry;
 
-    // Encode the updated array back to JSON
     $jsonUpdated = json_encode($blogs, JSON_PRETTY_PRINT);
 
-    // Write the JSON data back to the file
     file_put_contents('blogs.json', $jsonUpdated);
 
-    // Optionally, you can redirect the user after the form submission
     header('Location: index.php');
     exit;
 }
@@ -141,15 +133,11 @@ h1{
     <h1>Recent Blogs:</h1>
 
 <?php
-// Read JSON file
 $jsonData = file_get_contents('blogs.json');
 
-// Decode JSON data
 $blogs = json_decode($jsonData, true);
 
-// Check if decoding was successful
 if ($blogs !== null) {
-    // Loop through the data and display it
     foreach ($blogs as $blog) {
         echo '<div class="blogItem">';
         echo '<p>' . htmlspecialchars($blog['id']) . '</p>';
